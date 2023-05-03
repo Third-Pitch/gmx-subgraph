@@ -1,0 +1,46 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\junbao\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
+
+PATH: 
+  C:\programcode\gmx\gmx-subgraph\node_modules\.bin;C:\programcode\software\WebStorm 2019.1.4\jre64\\bin;C:\programcode\software\WebStorm 2019.1.4\jre64\\bin\server;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\programcode\software\jdk1.8.0_92\bin;C:\programcode\software\apache-maven-3.3.9\bin;C:\programcode\software\go1.20.2\go\bin;C:\programcode\software\gradle-7.2\bin;C:\TDM-GCC-64\bin;C:\programcode\software\putty\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Pandoc\;C:\Program Files (x86)\Microsoft Emulator Manager\1.0\;C:\programcode\android-hook;C:\Users\junbao\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\programcode\software\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\GnuWin32\bin;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;C:\Users\junbao\.pyenv\pyenv-win\bin;C:\Users\junbao\.pyenv\pyenv-win\shims;C:\Users\junbao\AppData\Local\activestate\cache\bin;C:\Users\junbao\AppData\Local\ActiveState\StateTool\release;C:\Users\junbao\AppData\Local\Microsoft\WindowsApps;C:\programcode\software\WebStorm 2019.1.4\bin;C:\programcode\software\IntelliJ IDEA 2019.1.4\bin;C:\Users\junbao\AppData\Local\Programs\Microsoft VS Code\bin;C:\programcode\software\Fiddler;C:\programcode\software\GoLand 2019.2.5\bin;;C:\Users\junbao\AppData\Roaming\npm;C:\Program Files (x86)\Tencent\QQGameTempest\Hall.57773\;C:\Users\junbao\.web3j\web3j-cli-shadow-1.4.1\bin;C:\Users\junbao\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\JetBrains\IntelliJ IDEA 2021.2.4\bin;C:\Program Files\JetBrains\PyCharm 2021.2.4\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.19.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:217:20)
+
+npm manifest: 
+  {
+    "name": "gmx",
+    "license": "UNLICENSED",
+    "scripts": {
+      "codegen": "graph codegen",
+      "build": "graph build",
+      "deploy-prod": "graph deploy --product hosted-service gmx-io/gmx-stats",
+      "deploy-test": "graph deploy --product hosted-service gdev8317/gmx-arbitrum-stats --deploy-key $(cat .access_token)",
+      "create": "graph create seascape --node https://api.thegraph.com/deploy/",
+      "create-local": "graph create gmx-base-stats --node http://127.0.0.1:8020",
+      "deploy": "graph deploy seascape --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+      "deploy-local": "graph deploy gmx-base-stats --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
+    },
+    "dependencies": {
+      "@graphprotocol/graph-cli": "^0.30.2",
+      "@graphprotocol/graph-ts": "^0.27.0",
+      "ethers": "^6.3.0",
+      "moment": "^2.29.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
