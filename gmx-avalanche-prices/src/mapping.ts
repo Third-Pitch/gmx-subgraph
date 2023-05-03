@@ -5,11 +5,19 @@ import {
 } from "../generated/FastPriceEvents/FastPriceEvents"
 import { PriceCandle } from "../generated/schema"
 
+function getMax(a:BigInt, b:BigInt): BigInt {
+  return a > b ? a : b;
+}
+
+function getMin(a: BigInt, b: BigInt): BigInt {
+  return a < b ? a : b;
+}
+
 function timestampToPeriodStart(timestamp: BigInt, period: string): BigInt {
   let seconds = periodToSeconds(period)
   return timestamp / seconds * seconds
-
 }
+
 function periodToSeconds(period: string): BigInt {
   let seconds: BigInt
   if (period == "5m") {
@@ -50,18 +58,14 @@ function updateCandle(event: PriceUpdate, period: string): void {
     } else {
       entity.open = prevEntity.close
     }
-    entity.high = event.params.price
-    entity.low = event.params.price
     entity.close = event.params.price
+    entity.high = getMax(entity.open, entity.close)
+    entity.low = getMin(entity.open, entity.close)
     entity.timestamp = periodStart.toI32()
     entity.token = event.params.token.toHexString()
   } else {
-    if (entity.high < event.params.price) {
-      entity.high = event.params.price
-    }
-    if (entity.low > event.params.price) {
-      entity.low = event.params.price
-    }
+    entity.high = getMax(entity.high, event.params.price);
+    entity.low = getMin(entity.low, event.params.price)
     entity.close = event.params.price
   }
 
