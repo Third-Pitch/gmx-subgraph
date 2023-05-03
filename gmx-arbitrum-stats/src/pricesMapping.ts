@@ -12,12 +12,8 @@ import {
   WETH,
   BTC,
   LINK,
-  UNI,
   USDT,
   USDC,
-  MIM,
-  SPELL,
-  SUSHI,
   DAI,
   GMX,
   getTokenAmountUsd,
@@ -68,29 +64,24 @@ export function handleAnswerUpdatedETH(event: AnswerUpdatedEvent): void {
   _storeChainlinkPrice(WETH, event.params.current, event.block.timestamp, event.block.number)
 }
 
-export function handleAnswerUpdatedUNI(event: AnswerUpdatedEvent): void {
-  _storeChainlinkPrice(UNI, event.params.current, event.block.timestamp, event.block.number)
-}
-
 export function handleAnswerUpdatedLINK(event: AnswerUpdatedEvent): void {
   _storeChainlinkPrice(LINK, event.params.current, event.block.timestamp, event.block.number)
 }
 
-export function handleAnswerUpdatedSPELL(event: AnswerUpdatedEvent): void {
-  _storeChainlinkPrice(SPELL, event.params.current, event.block.timestamp, event.block.number)
-}
-
-export function handleAnswerUpdatedMIM(event: AnswerUpdatedEvent): void {
-  _storeChainlinkPrice(MIM, event.params.current, event.block.timestamp, event.block.number)
-}
 
 export function handleAnswerUpdatedDAI(event: AnswerUpdatedEvent): void {
   _storeChainlinkPrice(DAI, event.params.current, event.block.timestamp, event.block.number)
 }
 
-export function handleAnswerUpdatedSUSHI(event: AnswerUpdatedEvent): void {
-  _storeChainlinkPrice(SUSHI, event.params.current, event.block.timestamp, event.block.number)
+export function handleAnswerUpdatedUSDC(event: AnswerUpdatedEvent): void {
+  _storeChainlinkPrice(USDC, event.params.current, event.block.timestamp, event.block.number)
 }
+
+export function handleAnswerUpdatedUSDT(event: AnswerUpdatedEvent): void {
+  _storeChainlinkPrice(USDT, event.params.current, event.block.timestamp, event.block.number)
+}
+
+
 
 function _storeUniswapPrice(
   id: string,

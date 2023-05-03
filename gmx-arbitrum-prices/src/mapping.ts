@@ -29,7 +29,7 @@ function periodToSeconds(period: string): BigInt {
 
 function getId(token: Address, period: string, periodStart: BigInt, event: ethereum.Event): string {
   if (period == "any") {
-    return token.toHexString() + ":" + period + ":" + event.transaction.hash.toHexString() 
+    return token.toHexString() + ":" + period + ":" + event.transaction.hash.toHexString()
   }
   return token.toHexString() + ":" + period + ":" + periodStart.toString()
 }
@@ -39,8 +39,8 @@ function updateCandle(event: PriceUpdate, period: string): void {
   let id = getId(event.params.token, period, periodStart, event)
   let entity = PriceCandle.load(id)
 
-  if (entity == null) {
-    let prevId = getId(event.params.token, period, periodStart - periodToSeconds(period))
+  if (!entity) {
+    let prevId = getId(event.params.token, period, periodStart - periodToSeconds(period),event)
     let prevEntity = PriceCandle.load(prevId)
     
     entity = new PriceCandle(id)

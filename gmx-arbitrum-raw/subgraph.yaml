@@ -1,17 +1,17 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: PositionRouter
-    network: arbitrum-one
+    network: base-testnet
     source:
-      address: "0x3D6bA331e3D9702C5e8A8d254e5d8a285F223aba"
+      address: "0xECA4B3f2aF83367B047bbf2DeCC3BA39630CE1FC"
       abi: PositionRouter
-      startBlock: 227000
+      startBlock: 2717572
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - CreateIncreasePosition
@@ -28,14 +28,14 @@ dataSources:
 
   - kind: ethereum/contract
     name: RewardRouterV2
-    network: arbitrum-one
+    network: base-testnet
     source:
-      address: "0xA906F338CB21815cBc4Bc87ace9e68c87eF8d8F1"
+      address: "0xC125A16E5BDCEB2E4E5950df1490c891D7bE2Cd1"
       abi: RewardRouterV2
-      startBlock: 227000
+      startBlock: 2754677
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - StakeGmx
@@ -58,14 +58,14 @@ dataSources:
 
   - kind: ethereum/contract
     name: Vault
-    network: arbitrum-one
+    network: base-testnet
     source:
-      startBlock: 227000
-      address: "0x489ee077994B6658eAfA855C308275EAd8097C4A"
+      startBlock: 2451236
+      address: "0xfD22f2b0975Ff9219a635cF84F3Fd154AB78af9B"
       abi: Vault
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         # - BuyUSDG
@@ -135,4 +135,28 @@ dataSources:
         #   handler: handleUpdatePnl
         - event: UpdatePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256)
           handler: handleUpdatePosition
+      file: ./src/mapping.ts
+
+  - kind: ethereum/contract
+    name: GlpManager
+    network: base-testnet
+    source:
+      startBlock: 2451288
+      address: "0xE76eEc5A8561Bf5fc01c5e4946F66aE5e2f07CF5"
+      abi: GlpManager
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - AddLiquidity
+        - RemoveLiquidity
+      abis:
+        - name: GlpManager
+          file: ./abis/GlpManager.json
+      eventHandlers:
+        - event: RemoveLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRemoveLiquidity
+        - event: AddLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleAddLiquidity
       file: ./src/mapping.ts

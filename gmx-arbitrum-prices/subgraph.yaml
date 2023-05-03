@@ -1,17 +1,17 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: FastPriceEvents
-    network: arbitrum-one
+    network: base-testnet
     source:
-      address: "0x4530b7de1958270a2376be192a24175d795e1b07"
+      address: "0xd4e7B7DEEBEd4AcA142F90416A1a5D6C4A940fd0"
       abi: FastPriceEvents
-      startBlock: 3716732  # FastPriceEvents was deployed
+      startBlock: 2451234  # FastPriceEvents was deployed
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - PriceUpdate

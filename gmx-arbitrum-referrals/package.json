@@ -4,11 +4,17 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
+    "auth": "graph auth --studio 69084f663b7e5fce03447dd40e795520",
+    "deploy-base-test": "graph deploy --studio test-referrals",
     "deploy-test": "graph codegen && graph deploy --product hosted-service gdev8317/gmx-arbitrum-referrals-staging --deploy-key $(cat .access_token)",
-    "deploy-prod": "graph codegen && graph deploy --product hosted-service gmx-io/gmx-arbitrum-referrals"
+    "deploy-prod": "graph codegen && graph deploy --product hosted-service gmx-io/gmx-arbitrum-referrals",
+    "create": "graph create seascape --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create gmx-base-referrals --node http://127.0.0.1:8020",
+    "deploy": "graph deploy seascape --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-local": "graph deploy gmx-base-referrals --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.21.1",
-    "@graphprotocol/graph-ts": "0.20.0"
+    "@graphprotocol/graph-cli": "^0.48.0",
+    "@graphprotocol/graph-ts": "0.29.3"
   }
 }

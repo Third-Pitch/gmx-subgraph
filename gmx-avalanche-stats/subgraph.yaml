@@ -9,7 +9,7 @@ dataSources:
     name: ChainlinkAggregatorBTC
     network: avalanche
     source:
-      address: "0x154baB1FC1D87fF641EeD0E9Bc0f8a50D880D2B6"
+      address: "0xAC15714c08986DACC0379193e22382736796496f"
       abi: ChainlinkAggregator
       startBlock: 8330228
     mapping:
@@ -30,7 +30,7 @@ dataSources:
     name: ChainlinkAggregatorETH
     network: avalanche
     source:
-      address: "0xEfaa69f461E0aaf0be1798b01371Daf14AC55eA8"
+      address: "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
       abi: ChainlinkAggregator
       startBlock: 8330228
     mapping:
@@ -75,29 +75,6 @@ dataSources:
       address: "0xe1ae4d4b06A5Fe1fc288f6B4CD72f9F8323B107F"
       abi: GlpManager
       startBlock: 8231150
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - HourlyGlpStat
-      abis:
-        - name: GlpManager
-          file: ./abis/GlpManager.json
-      eventHandlers:
-        - event: AddLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
-          handler: handleAddLiquidity
-        - event: RemoveLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
-          handler: handleRemoveLiquidity
-      file: ./src/mapping.ts
-
-  - kind: ethereum/contract
-    name: GlpManager2
-    network: avalanche
-    source:
-      address: "0xD152c7F25db7F4B95b7658323c5F33d176818EE4"
-      abi: GlpManager
-      startBlock: 22742389
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

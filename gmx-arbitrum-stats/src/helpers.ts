@@ -7,18 +7,14 @@ import {
 export let BASIS_POINTS_DIVISOR = BigInt.fromI32(10000)
 export let PRECISION = BigInt.fromI32(10).pow(30)
 
-export let WETH = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
-export let BTC = "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f"
-export let LINK = "0xf97f4df75117a78c1a5a0dbb814af92458539fb4"
-export let UNI = "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0"
-export let USDT = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9"
-export let USDC = "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8"
-export let MIM = "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a"
-export let SPELL = "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af"
-export let SUSHI = "0xd4d42f0b6def4ce0383636770ef773390d85c61a"
-export let FRAX = "0x17fc002b466eec40dae837fc4be5c67993ddbd6f"
-export let DAI = "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1"
-export let GMX = "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a"
+// must be lower
+export let WETH = "0x4200000000000000000000000000000000000006"
+export let BTC = "0x5fe699663197083711137060e3774b9ecdee16d2"
+export let LINK = "0x1ef0a4cd5cd4cd23d3dffb8ec657d92206b11005"
+export let USDT = "0xdcd63e6142a900dc1e1780595b2d165c6459104e"
+export let USDC = "0x4f526361313618a87e952720f3ef5b44dcd7c9c3"
+export let DAI = "0xaa23a4d90a50a06e171d32ee75897cdca4bc3f51"
+export let GMX = "0x9fd329310b43d00aaf050518200732ac45f34dc5"
 
 export function timestampToDay(timestamp: BigInt): BigInt {
   return timestamp / BigInt.fromI32(86400) * BigInt.fromI32(86400)
@@ -44,15 +40,10 @@ export function timestampToPeriod(timestamp: BigInt, period: string): BigInt {
 export function getTokenDecimals(token: String): u8 {
   let tokenDecimals = new Map<String, i32>()
   tokenDecimals.set(WETH, 18)
-  tokenDecimals.set(BTC, 8)
+  tokenDecimals.set(BTC, 18)
   tokenDecimals.set(LINK, 18)
-  tokenDecimals.set(UNI, 18)
-  tokenDecimals.set(USDC, 6)
-  tokenDecimals.set(USDT, 6)
-  tokenDecimals.set(MIM, 18)
-  tokenDecimals.set(SPELL, 18)
-  tokenDecimals.set(SUSHI, 18)
-  tokenDecimals.set(FRAX, 18)
+  tokenDecimals.set(USDC, 18)
+  tokenDecimals.set(USDT, 18)
   tokenDecimals.set(DAI, 18)
   tokenDecimals.set(GMX, 18)
 
@@ -88,13 +79,8 @@ export function getTokenPrice(token: String): BigInt {
   prices.set(WETH, BigInt.fromI32(3350) * PRECISION)
   prices.set(BTC, BigInt.fromI32(45000) * PRECISION)
   prices.set(LINK, BigInt.fromI32(25) * PRECISION)
-  prices.set(UNI, BigInt.fromI32(23) * PRECISION)
   prices.set(USDC, PRECISION)
   prices.set(USDT, PRECISION)
-  prices.set(MIM, PRECISION)
-  prices.set(SPELL, PRECISION / BigInt.fromI32(50)) // ~2 cents
-  prices.set(SUSHI, BigInt.fromI32(10) * PRECISION)
-  prices.set(FRAX, PRECISION)
   prices.set(DAI, PRECISION)
   prices.set(GMX, BigInt.fromI32(30) * PRECISION)
 

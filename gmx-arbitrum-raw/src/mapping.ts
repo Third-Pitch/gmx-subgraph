@@ -27,16 +27,16 @@ function _createTransactionIfNotExist(event: ethereum.Event): string {
   let id = _generateIdFromEvent(event)
   let entity = Transaction.load(id)
 
-  if (entity == null) {
+  if (!entity) {
     entity = new Transaction(id)
     entity.timestamp = event.block.timestamp.toI32()
     entity.blockNumber = event.block.number.toI32()
     entity.transactionIndex = event.transaction.index.toI32()
     entity.from = event.transaction.from.toHexString()
-    if (event.transaction.to == null) {
+    if (!(event.transaction.to)) {
       entity.to = ""
     } else {
-      entity.to = event.transaction.to.toHexString()
+      entity.to = event.transaction.to!.toHexString()
     }
     entity.save()
   }

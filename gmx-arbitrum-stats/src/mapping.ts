@@ -54,7 +54,7 @@ import {
   getTokenAmountUsd,
   timestampToPeriod
 } from "./helpers"
-import { 
+import {
   DecreaseUsdgAmount,
   IncreaseUsdgAmount,
   DecreaseReservedAmount,
@@ -64,7 +64,7 @@ import {
 let ZERO = BigInt.fromI32(0)
 let FUNDING_PRECISION = BigInt.fromI32(1000000)
 
-const LIQUIDATOR_ADDRESS = "0x44311c91008dde73de521cd25136fd37d616802c"
+const LIQUIDATOR_ADDRESS = "0xcb5A899FfcB0049BDeF4205694DCCCE29cbFf21F"
 
 export function handleIncreasePosition(event: IncreasePositionEvent): void {
   _storeVolume("margin", event.block.timestamp, event.params.sizeDelta)
@@ -142,7 +142,7 @@ function _storeLiquidatedPosition(
   markPrice: BigInt
 ): void {
   let key = keyBytes.toHexString()
-  let position = ActivePosition.load(key)
+  let position = ActivePosition.load(key)!
   let averagePrice = position.averagePrice
 
   let id = key + ":" + timestamp.toString()
@@ -163,7 +163,7 @@ function _storeLiquidatedPosition(
   liquidatedPosition.loss = size * priceDelta / averagePrice
 
   let fundingRateId = _getFundingRateId("total", collateralToken)
-  let fundingRateEntity = FundingRate.load(fundingRateId)
+  let fundingRateEntity = FundingRate.load(fundingRateId)!
   let accruedFundingRate = BigInt.fromI32(fundingRateEntity.endFundingRate) - position.entryFundingRate
   liquidatedPosition.borrowFee = accruedFundingRate * size / FUNDING_PRECISION
 
@@ -200,10 +200,15 @@ export function handleCollectMarginFees(event: CollectMarginFeesEvent): void {
 export function handleSwap(event: SwapEvent): void {
   let txId = event.transaction.hash.toHexString()
   let transaction = Transaction.load(txId)
-  if (transaction == null) {
+  if (!transaction) {
     transaction = new Transaction(event.transaction.hash.toHexString())
     transaction.from = event.transaction.from.toHexString()
-    transaction.to = event.transaction.to.toHexString()
+    if(event.transaction.to){
+      transaction.to = event.transaction.to!.toHexString()
+    }else{
+      transaction.to = Address.fromString('0x0000000000000000000000000000000000000000').toHexString()
+    }
+
     transaction.save()
   }
 
@@ -283,7 +288,7 @@ function _storeUserActionByType(
   }
 
   if (user == null) {
-    user = new UserData(userId) 
+    user = new UserData(userId)
     user.period = period
     user.timestamp = parseInt(timestampId) as i32
 
@@ -541,32 +546,33 @@ function _getOrCreateVolumeStat(id: string, period: string): VolumeStat {
 }
 
 function _storeVolumeBySource(type: string, timestamp: BigInt, source: Address | null, volume: BigInt): void {
+
+  if(!source){
+    source = Address.fromString('0x0000000000000000000000000000000000000000')
+  }
   let id = _getHourId(timestamp) + ":" + source.toHexString()
   let entity = HourlyVolumeBySource.load(id)
 
-  if (entity == null) {
+  if (!entity) {
     entity = new HourlyVolumeBySource(id)
-    if (source == null) {
-      entity.source = ""
-    } else {
-      entity.source = source.toHexString()
-    }
+    entity.source = source.toHexString()
     entity.timestamp = timestamp.toI32() / 3600 * 3600
     for (let i = 0; i < TRADE_TYPES.length; i++) {
       let _type = TRADE_TYPES[i]
       entity.setBigInt(_type, ZERO)
     }
+  }else{
+    entity.setBigInt(type, entity.getBigInt(type) + volume)
+    entity.save()
   }
 
-  entity.setBigInt(type, entity.getBigInt(type) + volume)
-  entity.save()
 }
 
 function _storeVolumeByToken(type: string, timestamp: BigInt, tokenA: Address, tokenB: Address, volume: BigInt): void {
   let id = _getHourId(timestamp) + ":" + tokenA.toHexString() + ":" + tokenB.toHexString()
   let entity = HourlyVolumeByToken.load(id)
 
-  if (entity == null) {
+  if (!entity) {
     entity = new HourlyVolumeByToken(id)
     entity.tokenA = tokenA
     entity.tokenB = tokenB
@@ -583,7 +589,7 @@ function _storeVolumeByToken(type: string, timestamp: BigInt, tokenA: Address, t
 
 function _getOrCreateGlpStat(id: string, period: string): GlpStat {
   let entity = GlpStat.load(id)
-  if (entity == null) {
+  if (!entity) {
     entity = new GlpStat(id)
     entity.period = period
     entity.glpSupply = ZERO
@@ -776,7 +782,7 @@ function _getOrCreateTokenStat(timestamp: BigInt, period: string, token: Address
   }
 
   let entity = TokenStat.load(id)
-  if (entity == null) {
+  if (!entity) {
     entity = new TokenStat(id)
     entity.timestamp = timestampGroup.toI32()
     entity.period = period
@@ -794,7 +800,7 @@ function _storeGlpStat(timestamp: BigInt, glpSupply: BigInt, aumInUsdg: BigInt):
   let deprecatedId = _getHourId(timestamp)
   let deprecatedEntity = HourlyGlpStat.load(deprecatedId)
 
-  if (deprecatedEntity == null) {
+  if (!deprecatedEntity) {
     deprecatedEntity = new HourlyGlpStat(deprecatedId)
     deprecatedEntity.glpSupply = ZERO
     deprecatedEntity.aumInUsdg = ZERO

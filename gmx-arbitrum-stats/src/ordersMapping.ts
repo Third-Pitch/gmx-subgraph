@@ -32,7 +32,7 @@ function _getId(account: Address, type: string, index: BigInt): string {
   return id
 }
 
-function _storeStats(incrementProp: string, decrementProp: string | null): void {
+function _storeStats(incrementProp: string, decrementProp: string): void {
   let entity = OrderStat.load("total")
   if (entity == null) {
     entity = new OrderStat("total")
@@ -49,7 +49,7 @@ function _storeStats(incrementProp: string, decrementProp: string | null): void 
   }
 
   entity.setI32(incrementProp, entity.getI32(incrementProp) + 1)
-  if (decrementProp != null) {
+  if (decrementProp != '') {
     entity.setI32(decrementProp, entity.getI32(decrementProp) - 1)
   }
 
@@ -72,7 +72,7 @@ function _handleCreateOrder(account: Address, type: string, index: BigInt, size:
 
 function _handleCancelOrder(account: Address, type: string, index: BigInt, timestamp: BigInt): void {
   let id = account.toHexString() + "-" + type + "-" + index.toString()
-  let order = Order.load(id)
+  let order = Order.load(id)!
 
   order.status = "cancelled"
   order.cancelledTimestamp = timestamp.toI32()
@@ -82,7 +82,7 @@ function _handleCancelOrder(account: Address, type: string, index: BigInt, times
 
 function _handleExecuteOrder(account: Address, type: string, index: BigInt, timestamp: BigInt): void {
   let id = account.toHexString() + "-" + type + "-" + index.toString()
-  let order = Order.load(id)
+  let order = Order.load(id)!
 
   order.status = "executed"
   order.executedTimestamp = timestamp.toI32()
@@ -92,7 +92,7 @@ function _handleExecuteOrder(account: Address, type: string, index: BigInt, time
 
 export function handleCreateIncreaseOrder(event: CreateIncreaseOrder): void {
   _handleCreateOrder(event.params.account, "increase", event.params.orderIndex, event.params.sizeDelta, event.block.timestamp);
-  _storeStats("openIncrease", null)
+  _storeStats("openIncrease", '')
 }
 
 export function handleCancelIncreaseOrder(event: CancelIncreaseOrder): void {
@@ -107,7 +107,7 @@ export function handleExecuteIncreaseOrder(event: ExecuteIncreaseOrder): void {
 
 export function handleCreateDecreaseOrder(event: CreateDecreaseOrder): void {
   _handleCreateOrder(event.params.account, "decrease", event.params.orderIndex, event.params.sizeDelta, event.block.timestamp);
-  _storeStats("openDecrease", null)
+  _storeStats("openDecrease", '')
 }
 
 export function handleCancelDecreaseOrder(event: CancelDecreaseOrder): void {
@@ -124,7 +124,7 @@ export function handleCreateSwapOrder(event: CreateSwapOrder): void {
   let path = event.params.path
   let size = getTokenAmountUsd(path[0].toHexString(), event.params.amountIn)
   _handleCreateOrder(event.params.account, "swap", event.params.orderIndex, size, event.block.timestamp);
-  _storeStats("openSwap", null)
+  _storeStats("openSwap", '')
 }
 
 export function handleCancelSwapOrder(event: CancelSwapOrder): void {
