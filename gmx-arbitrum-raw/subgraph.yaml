@@ -20,9 +20,9 @@ dataSources:
         - name: PositionRouter
           file: ./abis/PositionRouter.json
       eventHandlers:
-        - event: CreateIncreasePosition(indexed address,address[],address,uint256,uint256,uint256,bool,uint256,uint256,uint256,uint256,uint256,uint256)
+        - event: CreateIncreasePosition(indexed address,address[],address,uint256,uint256,uint256,bool,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleCreateIncreasePosition
-        - event: CreateDecreasePosition(indexed address,address[],address,uint256,uint256,bool,address,uint256,uint256,uint256,uint256,uint256,uint256)
+        - event: CreateDecreasePosition(indexed address,address[],address,uint256,uint256,bool,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleCreateDecreasePosition
       file: ./src/mapping.ts
 
@@ -133,7 +133,7 @@ dataSources:
         #   handler: handleUpdateFundingRate
         # - event: UpdatePnl(bytes32,bool,uint256)
         #   handler: handleUpdatePnl
-        - event: UpdatePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256)
+        - event: UpdatePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256,uint256)
           handler: handleUpdatePosition
       file: ./src/mapping.ts
 

@@ -25,7 +25,7 @@ import {
 } from '../generated/ChainlinkAggregatorBTC/ChainlinkAggregator'
 
 import {
-  SetPrice
+  PriceData
 } from '../generated/FastPriceFeed/FastPriceFeed'
 
 import {
@@ -147,6 +147,6 @@ export function handlePriceUpdate(event: PriceUpdate): void {
   _handleFastPriceUpdate(event.params.token, event.params.price, event.block.timestamp, event.block.number)
 }
 
-export function handleSetPrice(event: SetPrice): void {
-  _handleFastPriceUpdate(event.params.token, event.params.price, event.block.timestamp, event.block.number)
+export function handleSetPrice(event: PriceData): void {
+  _handleFastPriceUpdate(event.params.token, event.params.fastPrice, event.block.timestamp, event.block.number)
 }

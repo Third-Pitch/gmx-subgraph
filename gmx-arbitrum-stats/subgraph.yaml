@@ -206,7 +206,7 @@ dataSources:
         - name: FastPriceFeed
           file: ./abis/FastPriceFeed.json
       eventHandlers:
-        - event: SetPrice(address,uint256)
+        - event: PriceData(address,uint256,uint256,uint256,uint256)
           handler: handleSetPrice
       file: ./src/pricesMapping.ts
 
@@ -405,7 +405,7 @@ dataSources:
           handler: handleIncreasePosition
         - event: DecreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
           handler: handleDecreasePosition
-        - event: UpdatePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256)
+        - event: UpdatePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256,uint256)
           handler: handleUpdatePosition
         - event: LiquidatePosition(bytes32,address,address,address,bool,uint256,uint256,uint256,int256,uint256)
           handler: handleLiquidatePosition
