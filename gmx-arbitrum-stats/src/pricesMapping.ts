@@ -15,7 +15,7 @@ import {
   USDT,
   USDC,
   DAI,
-  GMX,
+  EDDX,
   getTokenAmountUsd,
   timestampToPeriod
 } from "./helpers"
@@ -104,15 +104,15 @@ function _storeUniswapPrice(
   entity.save()
 }
 
-export function handleUniswapGmxEthSwap(event: UniswapSwap): void {
-  let ethPerGmx = -(event.params.amount0 * BigInt.fromI32(10).pow(18) / event.params.amount1) * BigInt.fromI32(100) / BigInt.fromI32(99)
-  let gmxPrice = getTokenAmountUsd(WETH, ethPerGmx)
+export function handleUniswapEddxEthSwap(event: UniswapSwap): void {
+  let ethPerEddx = -(event.params.amount0 * BigInt.fromI32(10).pow(18) / event.params.amount1) * BigInt.fromI32(100) / BigInt.fromI32(99)
+  let eddxPrice = getTokenAmountUsd(WETH, ethPerEddx)
 
-  let totalId = GMX
-  _storeUniswapPrice(totalId, GMX, gmxPrice, "last", event.block.timestamp, event.block.number)
+  let totalId = EDDX
+  _storeUniswapPrice(totalId, EDDX, eddxPrice, "last", event.block.timestamp, event.block.number)
 
-  let id = GMX + ":" + event.block.timestamp.toString()
-  _storeUniswapPrice(id, GMX, gmxPrice, "any", event.block.timestamp, event.block.number)
+  let id = EDDX + ":" + event.block.timestamp.toString()
+  _storeUniswapPrice(id, EDDX, eddxPrice, "any", event.block.timestamp, event.block.number)
 }
 
 function _handleFastPriceUpdate(token: Address, price: BigInt, timestamp: BigInt, blockNumber: BigInt): void {

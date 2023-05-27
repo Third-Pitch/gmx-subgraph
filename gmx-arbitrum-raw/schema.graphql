@@ -7,7 +7,7 @@ type Transaction @entity {
   to: String!
 }
 
-type StakeGmx @entity {
+type StakeEddx @entity {
   id: ID!
 
   account: String!
@@ -18,7 +18,7 @@ type StakeGmx @entity {
   timestamp: Int!
 }
 
-type UnstakeGmx @entity {
+type UnstakeEddx @entity {
   id: ID!
 
   account: String!
@@ -29,7 +29,7 @@ type UnstakeGmx @entity {
   timestamp: Int!
 }
 
-type StakeGlp @entity {
+type StakeElp @entity {
   id: ID!
 
   account: String!
@@ -39,7 +39,7 @@ type StakeGlp @entity {
   timestamp: Int!
 }
 
-type UnstakeGlp @entity {
+type UnstakeElp @entity {
   id: ID!
 
   account: String!
@@ -205,7 +205,7 @@ type AddLiquidity @entity {
 
   amount: BigInt!
   aumInUsdg: BigInt!
-  glpSupply: BigInt!
+  elpSupply: BigInt!
   usdgAmount: BigInt!
   mintAmount: BigInt!
 
@@ -219,9 +219,9 @@ type RemoveLiquidity @entity {
   account: String!
   token: String!
 
-  glpAmount: BigInt!
+  elpAmount: BigInt!
   aumInUsdg: BigInt!
-  glpSupply: BigInt!
+  elpSupply: BigInt!
   usdgAmount: BigInt!
   amountOut: BigInt!
 

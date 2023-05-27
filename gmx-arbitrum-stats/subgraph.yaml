@@ -1,6 +1,6 @@
 specVersion: 0.0.4
-description: GMX
-#repository: https://github.com/gmx-io/gmx-subgraph
+description: EDDX
+#repository: https://github.com/eddx-io/eddx-subgraph
 schema:
   file: ./schema.graphql
 
@@ -9,7 +9,7 @@ dataSources:
     name: ChainlinkAggregatorBTC
     network: base-testnet
     source:
-      address: "0x5fE699663197083711137060e3774b9ecDee16D2"
+      address: "0xAC15714c08986DACC0379193e22382736796496f"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -29,7 +29,7 @@ dataSources:
     name: ChainlinkAggregatorETH
     network: base-testnet
     source:
-      address: "0x4200000000000000000000000000000000000006"
+      address: "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -50,7 +50,7 @@ dataSources:
     name: ChainlinkAggregatorLINK
     network: base-testnet
     source:
-      address: "0x1ef0A4Cd5cD4cd23D3dFFB8ec657D92206B11005"
+      address: "0x907A947C5F34eC68F8D4eD87d4bac3FA6431a4D1"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -71,7 +71,7 @@ dataSources:
     name: ChainlinkAggregatorDAI
     network: base-testnet
     source:
-      address: "0xaA23a4d90a50A06E171d32EE75897cDCa4BC3F51"
+      address: "0x440bD1535a02243d72E0fEED45B137efcC98bF7e"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -91,7 +91,7 @@ dataSources:
     name: ChainlinkAggregatorUSDC
     network: base-testnet
     source:
-      address: "0x4f526361313618a87E952720F3eF5b44Dcd7C9c3"
+      address: "0xb85765935B4d9Ab6f841c9a00690Da5F34368bc0"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -111,7 +111,7 @@ dataSources:
     name: ChainlinkAggregatorUSDT
     network: base-testnet
     source:
-      address: "0xdcD63E6142A900DC1E1780595B2D165C6459104E"
+      address: "0xd5973EB46D6fE54E82C5337dD9536B35D080912C"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -128,21 +128,21 @@ dataSources:
           handler: handleAnswerUpdatedUSDT
       file: ./src/pricesMapping.ts
   - kind: ethereum/contract
-    name: GlpManager
+    name: ElpManager
     network: base-testnet
     source:
       address: "0xE76eEc5A8561Bf5fc01c5e4946F66aE5e2f07CF5"
-      abi: GlpManager
+      abi: ElpManager
       startBlock: 2451234
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - HourlyGlpStat
+        - HourlyElpStat
       abis:
-        - name: GlpManager
-          file: ./abis/GlpManager.json
+        - name: ElpManager
+          file: ./abis/ElpManager.json
       eventHandlers:
         - event: AddLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
           handler: handleAddLiquidity
@@ -249,11 +249,11 @@ dataSources:
           file: ./abis/UniswapPoolV3.json
       eventHandlers:
         - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
-          handler: handleUniswapGmxEthSwap
+          handler: handleUniswapEddxEthSwap
       file: ./src/pricesMapping.ts
 
   - kind: ethereum/contract
-    name: FeeGmxRewardDistributor
+    name: FeeEddxRewardDistributor
     network: base-testnet
     source:
       address: "0x2E7b88f2A77976e7D143D19200D14d863Eae67E6"
@@ -264,17 +264,17 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - GmxStat
+        - EddxStat
       abis:
         - name: RewardDistributor
           file: ./abis/RewardDistributor.json
       eventHandlers:
         - event: Distribute(uint256)
-          handler: handleDistributeEthToGmx
+          handler: handleDistributeEthToEddx
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
-    name: EsgmxGmxRewardDistributor
+    name: EseddxEddxRewardDistributor
     network: base-testnet
     source:
       address: "0xA0dAb4a62000Dd9E7C2E4bE80b236EB908A28f05"
@@ -285,17 +285,17 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - GmxStat
+        - EddxStat
       abis:
         - name: RewardDistributor
           file: ./abis/RewardDistributor.json
       eventHandlers:
         - event: Distribute(uint256)
-          handler: handleDistributeEsgmxToGmx
+          handler: handleDistributeEseddxToEddx
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
-    name: FeeGlpRewardDistributor
+    name: FeeElpRewardDistributor
     network: base-testnet
     source:
       address: "0x3851A4d4C6cDdF8a2ED03d31b49A7578E5186f96"
@@ -306,17 +306,17 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - GmxStat
+        - EddxStat
       abis:
         - name: RewardDistributor
           file: ./abis/RewardDistributor.json
       eventHandlers:
         - event: Distribute(uint256)
-          handler: handleDistributeEthToGlp
+          handler: handleDistributeEthToElp
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
-    name: EsgmxGlpRewardDistributor
+    name: EseddxElpRewardDistributor
     network: base-testnet
     source:
       address: "0x7dA0DaEfbE12AA190f2779f86A309823B8Fa78Fe"
@@ -327,13 +327,13 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - GmxStat
+        - EddxStat
       abis:
         - name: RewardDistributor
           file: ./abis/RewardDistributor.json
       eventHandlers:
         - event: Distribute(uint256)
-          handler: handleDistributeEsgmxToGlp
+          handler: handleDistributeEseddxToElp
       file: ./src/mapping.ts
 
   - kind: ethereum/contract

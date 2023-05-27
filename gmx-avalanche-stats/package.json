@@ -1,11 +1,11 @@
 {
-  "name": "gmx",
+  "name": "eddx",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy-prod": "graph deploy --product hosted-service gmx-io/gmx-avalanche-stats",
-    "deploy-test": "graph deploy --product hosted-service gdev8317/gmx-avalanche-staging --deploy-key $(cat .access_token)",
+    "deploy-prod": "graph deploy --product hosted-service eddx-io/eddx-avalanche-stats",
+    "deploy-test": "graph deploy --product hosted-service gdev8317/eddx-avalanche-staging --deploy-key $(cat .access_token)",
     "create": "graph create seascape --node https://api.thegraph.com/deploy/",
     "create-local": "graph create seascape --node http://127.0.0.1:8020",
     "deploy": "graph deploy seascape --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",

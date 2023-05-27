@@ -13,7 +13,7 @@
       },
       {
         "internalType": "address",
-        "name": "_glp",
+        "name": "_elp",
         "type": "address"
       },
       {
@@ -60,7 +60,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "glpSupply",
+        "name": "elpSupply",
         "type": "uint256"
       },
       {
@@ -97,7 +97,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "glpAmount",
+        "name": "elpAmount",
         "type": "uint256"
       },
       {
@@ -109,7 +109,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "glpSupply",
+        "name": "elpSupply",
         "type": "uint256"
       },
       {
@@ -143,7 +143,7 @@
   },
   {
     "inputs": [],
-    "name": "GLP_PRECISION",
+    "name": "ELP_PRECISION",
     "outputs": [
       {
         "internalType": "uint256",
@@ -212,7 +212,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_minGlp",
+        "name": "_minElp",
         "type": "uint256"
       }
     ],
@@ -256,7 +256,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_minGlp",
+        "name": "_minElp",
         "type": "uint256"
       }
     ],
@@ -435,7 +435,7 @@
   },
   {
     "inputs": [],
-    "name": "glp",
+    "name": "elp",
     "outputs": [
       {
         "internalType": "address",
@@ -519,7 +519,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_glpAmount",
+        "name": "_elpAmount",
         "type": "uint256"
       },
       {
@@ -558,7 +558,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_glpAmount",
+        "name": "_elpAmount",
         "type": "uint256"
       },
       {

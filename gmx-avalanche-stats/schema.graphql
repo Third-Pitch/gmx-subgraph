@@ -197,10 +197,10 @@ type UserStat @entity {
   timestamp: Int
 }
 
-type GlpStat @entity {
+type ElpStat @entity {
   id: ID!
 
-  glpSupply: BigInt!
+  elpSupply: BigInt!
   aumInUsdg: BigInt!
 
   distributedEth: BigInt!
@@ -208,10 +208,10 @@ type GlpStat @entity {
   distributedUsd: BigInt!
   distributedUsdCumulative: BigInt!
 
-  distributedEsgmx: BigInt!
-  distributedEsgmxCumulative: BigInt!
-  distributedEsgmxUsd: BigInt!
-  distributedEsgmxUsdCumulative: BigInt!
+  distributedEseddx: BigInt!
+  distributedEseddxCumulative: BigInt!
+  distributedEseddxUsd: BigInt!
+  distributedEseddxUsdCumulative: BigInt!
 
   period: Period!
   timestamp: Int
@@ -297,7 +297,7 @@ type Transaction @entity {
   to: String!
 }
 
-type GmxStat @entity {
+type EddxStat @entity {
   id: ID!
 
   distributedEth: BigInt!
@@ -305,10 +305,10 @@ type GmxStat @entity {
   distributedUsd: BigInt!
   distributedUsdCumulative: BigInt!
 
-  distributedEsgmx: BigInt!
-  distributedEsgmxCumulative: BigInt!
-  distributedEsgmxUsd: BigInt!
-  distributedEsgmxUsdCumulative: BigInt!
+  distributedEseddx: BigInt!
+  distributedEseddxCumulative: BigInt!
+  distributedEseddxUsd: BigInt!
+  distributedEseddxUsdCumulative: BigInt!
 
   period: Period!
 }

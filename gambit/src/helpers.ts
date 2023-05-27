@@ -63,7 +63,7 @@ export function getTokenPrice(tokenAddress: string): BigInt {
   let entity = ChainlinkPrice.load(tokenAddress)
   if (entity != null) {
     // all chainlink prices have 8 decimals
-    // adjusting them to fit GMX 30 decimals USD values
+    // adjusting them to fit EDDX 30 decimals USD values
     return entity.value * BigInt.fromString("10").pow(22)
   }
   let defaultPrices = new TypedMap<String, BigInt>()

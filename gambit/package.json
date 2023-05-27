@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "deploy-test": "graph deploy --product hosted-service gdev8317/gambit --deploy-key $(cat .access_token)",
-    "deploy-sandbox": "graph deploy --product hosted-service gdev8317/gmx2 --deploy-key $(cat .access_token)",
-    "deploy-prod": "graph deploy --product hosted-service gmx-io/gmx-bsc-stats"
+    "deploy-sandbox": "graph deploy --product hosted-service gdev8317/eddx2 --deploy-key $(cat .access_token)",
+    "deploy-prod": "graph deploy --product hosted-service eddx-io/eddx-bsc-stats"
   },
   "author": "",
   "license": "ISC"

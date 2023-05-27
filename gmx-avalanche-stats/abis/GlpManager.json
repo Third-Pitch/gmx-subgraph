@@ -3,7 +3,7 @@
     "inputs": [
       { "internalType": "address", "name": "_vault", "type": "address" },
       { "internalType": "address", "name": "_usdg", "type": "address" },
-      { "internalType": "address", "name": "_glp", "type": "address" },
+      { "internalType": "address", "name": "_elp", "type": "address" },
       {
         "internalType": "uint256",
         "name": "_cooldownDuration",
@@ -43,7 +43,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "glpSupply",
+        "name": "elpSupply",
         "type": "uint256"
       },
       {
@@ -80,7 +80,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "glpAmount",
+        "name": "elpAmount",
         "type": "uint256"
       },
       {
@@ -92,7 +92,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "glpSupply",
+        "name": "elpSupply",
         "type": "uint256"
       },
       {
@@ -137,7 +137,7 @@
       { "internalType": "address", "name": "_token", "type": "address" },
       { "internalType": "uint256", "name": "_amount", "type": "uint256" },
       { "internalType": "uint256", "name": "_minUsdg", "type": "uint256" },
-      { "internalType": "uint256", "name": "_minGlp", "type": "uint256" }
+      { "internalType": "uint256", "name": "_minElp", "type": "uint256" }
     ],
     "name": "addLiquidity",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -155,7 +155,7 @@
       { "internalType": "address", "name": "_token", "type": "address" },
       { "internalType": "uint256", "name": "_amount", "type": "uint256" },
       { "internalType": "uint256", "name": "_minUsdg", "type": "uint256" },
-      { "internalType": "uint256", "name": "_minGlp", "type": "uint256" }
+      { "internalType": "uint256", "name": "_minElp", "type": "uint256" }
     ],
     "name": "addLiquidityForAccount",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -208,7 +208,7 @@
   },
   {
     "inputs": [],
-    "name": "glp",
+    "name": "elp",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
@@ -244,7 +244,7 @@
   {
     "inputs": [
       { "internalType": "address", "name": "_tokenOut", "type": "address" },
-      { "internalType": "uint256", "name": "_glpAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "_elpAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "_minOut", "type": "uint256" },
       { "internalType": "address", "name": "_receiver", "type": "address" }
     ],
@@ -257,7 +257,7 @@
     "inputs": [
       { "internalType": "address", "name": "_account", "type": "address" },
       { "internalType": "address", "name": "_tokenOut", "type": "address" },
-      { "internalType": "uint256", "name": "_glpAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "_elpAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "_minOut", "type": "uint256" },
       { "internalType": "address", "name": "_receiver", "type": "address" }
     ],

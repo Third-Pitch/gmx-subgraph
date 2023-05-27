@@ -1,6 +1,6 @@
 import { BigInt, ethereum } from "@graphprotocol/graph-ts"
 import * as vault from "../generated/Vault/Vault"
-import * as glpManager from "../generated/GlpManager/GlpManager"
+import * as elpManager from "../generated/ElpManager/ElpManager"
 import * as rewardRouter from "../generated/RewardRouterV2/RewardRouterV2"
 import {
   CollectMarginFee,
@@ -14,10 +14,10 @@ import {
   UpdatePosition,
   Transaction,
   Swap,
-  StakeGmx,
-  UnstakeGmx,
-  StakeGlp,
-  UnstakeGlp
+  StakeEddx,
+  UnstakeEddx,
+  StakeElp,
+  UnstakeElp
 } from "../generated/schema"
 
 function _createTransactionIfNotExist(event: ethereum.Event): string {
@@ -190,14 +190,14 @@ export function handleSwap(event: vault.Swap): void {
   entity.save()
 }
 
-export function handleAddLiquidity(event: glpManager.AddLiquidity): void {
+export function handleAddLiquidity(event: elpManager.AddLiquidity): void {
   let entity = new AddLiquidity(event.transaction.hash.toHexString())
 
   entity.account = event.params.account.toHexString()
   entity.token = event.params.token.toHexString()
   entity.amount = event.params.amount
   entity.aumInUsdg = event.params.aumInUsdg
-  entity.glpSupply = event.params.glpSupply
+  entity.elpSupply = event.params.elpSupply
   entity.usdgAmount = event.params.usdgAmount
   entity.mintAmount = event.params.mintAmount
 
@@ -207,14 +207,14 @@ export function handleAddLiquidity(event: glpManager.AddLiquidity): void {
   entity.save()
 }
 
-export function handleRemoveLiquidity(event: glpManager.RemoveLiquidity): void {
+export function handleRemoveLiquidity(event: elpManager.RemoveLiquidity): void {
   let entity = new RemoveLiquidity(event.transaction.hash.toHexString())
 
   entity.account = event.params.account.toHexString()
   entity.token = event.params.token.toHexString()
-  entity.glpAmount = event.params.glpAmount
+  entity.elpAmount = event.params.elpAmount
   entity.aumInUsdg = event.params.aumInUsdg
-  entity.glpSupply = event.params.glpSupply
+  entity.elpSupply = event.params.elpSupply
   entity.usdgAmount = event.params.usdgAmount
   entity.amountOut = event.params.amountOut
 
@@ -224,8 +224,8 @@ export function handleRemoveLiquidity(event: glpManager.RemoveLiquidity): void {
   entity.save() 
 }
 
-export function handleStakeGmx(event: rewardRouter.StakeGmx): void {
-  let entity = new StakeGmx(event.transaction.hash.toHexString())
+export function handleStakeEddx(event: rewardRouter.StakeEddx): void {
+  let entity = new StakeEddx(event.transaction.hash.toHexString())
 
   entity.account = event.params.account.toHexString()
   entity.token = event.params.token.toHexString()
@@ -237,8 +237,8 @@ export function handleStakeGmx(event: rewardRouter.StakeGmx): void {
   entity.save()
 }
 
-export function handleUnstakeGmx(event: rewardRouter.UnstakeGmx): void {
-  let entity = new UnstakeGmx(event.transaction.hash.toHexString())
+export function handleUnstakeEddx(event: rewardRouter.UnstakeEddx): void {
+  let entity = new UnstakeEddx(event.transaction.hash.toHexString())
 
   entity.account = event.params.account.toHexString()
   entity.token = event.params.token.toHexString()
@@ -250,8 +250,8 @@ export function handleUnstakeGmx(event: rewardRouter.UnstakeGmx): void {
   entity.save()
 }
 
-export function handleStakeGlp(event: rewardRouter.StakeGlp): void {
-  let entity = new StakeGlp(event.transaction.hash.toHexString())
+export function handleStakeElp(event: rewardRouter.StakeElp): void {
+  let entity = new StakeElp(event.transaction.hash.toHexString())
 
   entity.account = event.params.account.toHexString()
   entity.amount = event.params.amount
@@ -262,8 +262,8 @@ export function handleStakeGlp(event: rewardRouter.StakeGlp): void {
   entity.save()
 }
 
-export function handleUnstakeGlp(event: rewardRouter.UnstakeGlp): void {
-  let entity = new UnstakeGlp(event.transaction.hash.toHexString())
+export function handleUnstakeElp(event: rewardRouter.UnstakeElp): void {
+  let entity = new UnstakeElp(event.transaction.hash.toHexString())
 
   entity.account = event.params.account.toHexString()
   entity.amount = event.params.amount

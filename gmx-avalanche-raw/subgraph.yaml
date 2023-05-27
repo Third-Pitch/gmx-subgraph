@@ -14,22 +14,22 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - StakeGmx
-        - UnstakeGmx
-        - StakeGlp
-        - UnstakeGlp
+        - StakeEddx
+        - UnstakeEddx
+        - StakeElp
+        - UnstakeElp
       abis:
         - name: RewardRouterV2
           file: ./abis/RewardRouterV2.json
       eventHandlers:
-        - event: StakeGmx(address,address,uint256)
-          handler: handleStakeGmx
-        - event: UnstakeGmx(address,address,uint256)
-          handler: handleUnstakeGmx
-        - event: StakeGlp(address,uint256)
-          handler: handleStakeGlp
-        - event: UnstakeGlp(address,uint256)
-          handler: handleUnstakeGlp
+        - event: StakeEddx(address,address,uint256)
+          handler: handleStakeEddx
+        - event: UnstakeEddx(address,address,uint256)
+          handler: handleUnstakeEddx
+        - event: StakeElp(address,uint256)
+          handler: handleStakeElp
+        - event: UnstakeElp(address,uint256)
+          handler: handleUnstakeElp
       file: ./src/mapping.ts
 
   - kind: ethereum/contract

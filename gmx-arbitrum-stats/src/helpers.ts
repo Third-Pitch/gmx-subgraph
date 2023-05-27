@@ -14,7 +14,7 @@ export let LINK = "0x1ef0a4cd5cd4cd23d3dffb8ec657d92206b11005"
 export let USDT = "0xdcd63e6142a900dc1e1780595b2d165c6459104e"
 export let USDC = "0x4f526361313618a87e952720f3ef5b44dcd7c9c3"
 export let DAI = "0xaa23a4d90a50a06e171d32ee75897cdca4bc3f51"
-export let GMX = "0x9fd329310b43d00aaf050518200732ac45f34dc5"
+export let EDDX = "0x9fd329310b43d00aaf050518200732ac45f34dc5"
 
 export function timestampToDay(timestamp: BigInt): BigInt {
   return timestamp / BigInt.fromI32(86400) * BigInt.fromI32(86400)
@@ -45,7 +45,7 @@ export function getTokenDecimals(token: String): u8 {
   tokenDecimals.set(USDC, 18)
   tokenDecimals.set(USDT, 18)
   tokenDecimals.set(DAI, 18)
-  tokenDecimals.set(GMX, 18)
+  tokenDecimals.set(EDDX, 18)
 
   return tokenDecimals.get(token) as u8
 }
@@ -58,17 +58,17 @@ export function getTokenAmountUsd(token: String, amount: BigInt): BigInt {
 }
 
 export function getTokenPrice(token: String): BigInt {
-  if (token != GMX) {
+  if (token != EDDX) {
     let chainlinkPriceEntity = ChainlinkPrice.load(token)
     if (chainlinkPriceEntity != null) {
       // all chainlink prices have 8 decimals
-      // adjusting them to fit GMX 30 decimals USD values
+      // adjusting them to fit EDDX 30 decimals USD values
       return chainlinkPriceEntity.value * BigInt.fromI32(10).pow(22)
     }
   }
 
-  if (token == GMX) {
-    let uniswapPriceEntity = UniswapPrice.load(GMX)
+  if (token == EDDX) {
+    let uniswapPriceEntity = UniswapPrice.load(EDDX)
 
     if (uniswapPriceEntity != null) {
       return uniswapPriceEntity.value
@@ -82,7 +82,7 @@ export function getTokenPrice(token: String): BigInt {
   prices.set(USDC, PRECISION)
   prices.set(USDT, PRECISION)
   prices.set(DAI, PRECISION)
-  prices.set(GMX, BigInt.fromI32(30) * PRECISION)
+  prices.set(EDDX, BigInt.fromI32(30) * PRECISION)
 
   return prices.get(token) as BigInt
 }

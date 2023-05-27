@@ -105,7 +105,7 @@ export function handleLiquidatePosition(event: LiquidatePosition):void {
   _storeVolume("liquidation", event.block.timestamp, event.params.size)
 
   // we don't collect any fees during liquidation
-  // charged collateral may be considered as a protocol income (or GLP income)
+  // charged collateral may be considered as a protocol income (or ELP income)
   // but not a fee
 
   // let fee = event.params.collateral

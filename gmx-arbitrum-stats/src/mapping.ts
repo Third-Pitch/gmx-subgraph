@@ -1,13 +1,13 @@
 import { BigInt, Address, Bytes, TypedMap, ethereum, store, log } from "@graphprotocol/graph-ts"
 import {
-  GlpManager,
+  ElpManager,
   AddLiquidity,
   RemoveLiquidity
-} from "../generated/GlpManager/GlpManager"
+} from "../generated/ElpManager/ElpManager"
 
 import {
   Distribute
-} from "../generated/FeeGmxRewardDistributor/RewardDistributor"
+} from "../generated/FeeEddxRewardDistributor/RewardDistributor"
 
 import {
   Vault,
@@ -31,14 +31,14 @@ import {
   VolumeStat,
   HourlyVolume,
   Transaction,
-  HourlyGlpStat,
-  GlpStat,
+  HourlyElpStat,
+  ElpStat,
   HourlyVolumeBySource,
   HourlyVolumeByToken,
   UserData,
   UserStat,
   FundingRate,
-  GmxStat,
+  EddxStat,
   LiquidatedPosition,
   ActivePosition,
   WhitelistedToken,
@@ -47,7 +47,7 @@ import {
 
 import {
   WETH,
-  GMX,
+  EDDX,
   BASIS_POINTS_DIVISOR,
   getTokenPrice,
   getTokenDecimals,
@@ -340,11 +340,11 @@ function _storeUserActionByType(
 }
 
 export function handleAddLiquidity(event: AddLiquidity): void {
-  _storeGlpStat(event.block.timestamp, event.params.glpSupply, event.params.aumInUsdg)
+  _storeElpStat(event.block.timestamp, event.params.elpSupply, event.params.aumInUsdg)
 }
 
 export function handleRemoveLiquidity(event: RemoveLiquidity): void {
-  _storeGlpStat(event.block.timestamp, event.params.glpSupply, event.params.aumInUsdg)
+  _storeElpStat(event.block.timestamp, event.params.elpSupply, event.params.aumInUsdg)
 }
 
 function _getFundingRateId(timeKey: string, token: Address): string {
@@ -392,10 +392,10 @@ export function handleUpdateFundingRate(event: UpdateFundingRate): void {
   totalEntity.save()
 }
 
-export function handleDistributeEthToGmx(event: Distribute): void {
+export function handleDistributeEthToEddx(event: Distribute): void {
   let amount = event.params.amount
   let amountUsd = getTokenAmountUsd(WETH, amount)
-  let totalEntity = _getOrCreateGmxStat("total", "total")
+  let totalEntity = _getOrCreateEddxStat("total", "total")
   totalEntity.distributedEth += amount
   totalEntity.distributedEthCumulative += amount
   totalEntity.distributedUsd += amountUsd
@@ -404,7 +404,7 @@ export function handleDistributeEthToGmx(event: Distribute): void {
   totalEntity.save()
 
   let id = _getDayId(event.block.timestamp)
-  let entity = _getOrCreateGmxStat(id, "daily")
+  let entity = _getOrCreateEddxStat(id, "daily")
 
   entity.distributedEth += amount
   entity.distributedEthCumulative = totalEntity.distributedEthCumulative
@@ -413,44 +413,44 @@ export function handleDistributeEthToGmx(event: Distribute): void {
 
   entity.save()
 }
-export function handleDistributeEsgmxToGmx(event: Distribute): void {
+export function handleDistributeEseddxToEddx(event: Distribute): void {
   let amount = event.params.amount
-  let amountUsd = getTokenAmountUsd(GMX, amount)
+  let amountUsd = getTokenAmountUsd(EDDX, amount)
 
-  let totalEntity = _getOrCreateGmxStat("total", "total")
-  totalEntity.distributedEsgmx += amount
-  totalEntity.distributedEsgmxCumulative += amount
-  totalEntity.distributedEsgmxUsd += amountUsd
-  totalEntity.distributedEsgmxUsdCumulative += amountUsd
+  let totalEntity = _getOrCreateEddxStat("total", "total")
+  totalEntity.distributedEseddx += amount
+  totalEntity.distributedEseddxCumulative += amount
+  totalEntity.distributedEseddxUsd += amountUsd
+  totalEntity.distributedEseddxUsdCumulative += amountUsd
 
   totalEntity.save()
 
   let id = _getDayId(event.block.timestamp)
-  let entity = _getOrCreateGmxStat(id, "daily")
+  let entity = _getOrCreateEddxStat(id, "daily")
 
-  entity.distributedEsgmx += amount
-  entity.distributedEsgmxCumulative = totalEntity.distributedEthCumulative
-  entity.distributedEsgmxUsd += amountUsd
-  entity.distributedEsgmxUsdCumulative = totalEntity.distributedUsdCumulative
+  entity.distributedEseddx += amount
+  entity.distributedEseddxCumulative = totalEntity.distributedEthCumulative
+  entity.distributedEseddxUsd += amountUsd
+  entity.distributedEseddxUsdCumulative = totalEntity.distributedUsdCumulative
 
   entity.save()
 }
 
-function _getOrCreateGmxStat(id: string, period: string): GmxStat {
-  let entity = GmxStat.load(id)
+function _getOrCreateEddxStat(id: string, period: string): EddxStat {
+  let entity = EddxStat.load(id)
   if (entity == null) {
-    entity = new GmxStat(id)
+    entity = new EddxStat(id)
     entity.distributedEth = ZERO
     entity.distributedEthCumulative = ZERO
     entity.distributedUsd = ZERO
     entity.distributedUsdCumulative = ZERO
-    entity.distributedEsgmx = ZERO
-    entity.distributedEsgmxCumulative = ZERO
-    entity.distributedEsgmxUsd = ZERO
-    entity.distributedEsgmxUsdCumulative = ZERO
+    entity.distributedEseddx = ZERO
+    entity.distributedEseddxCumulative = ZERO
+    entity.distributedEseddxUsd = ZERO
+    entity.distributedEseddxUsdCumulative = ZERO
     entity.period = period
   }
-  return entity as GmxStat
+  return entity as EddxStat
 }
 
 let TRADE_TYPES = new Array<string>(5)
@@ -587,31 +587,31 @@ function _storeVolumeByToken(type: string, timestamp: BigInt, tokenA: Address, t
   entity.save()
 }
 
-function _getOrCreateGlpStat(id: string, period: string): GlpStat {
-  let entity = GlpStat.load(id)
+function _getOrCreateElpStat(id: string, period: string): ElpStat {
+  let entity = ElpStat.load(id)
   if (!entity) {
-    entity = new GlpStat(id)
+    entity = new ElpStat(id)
     entity.period = period
-    entity.glpSupply = ZERO
+    entity.elpSupply = ZERO
     entity.aumInUsdg = ZERO
     entity.distributedEth = ZERO
     entity.distributedEthCumulative = ZERO
     entity.distributedUsd = ZERO
     entity.distributedUsdCumulative = ZERO
-    entity.distributedEsgmx = ZERO
-    entity.distributedEsgmxCumulative = ZERO
-    entity.distributedEsgmxUsd = ZERO
-    entity.distributedEsgmxUsdCumulative = ZERO
+    entity.distributedEseddx = ZERO
+    entity.distributedEseddxCumulative = ZERO
+    entity.distributedEseddxUsd = ZERO
+    entity.distributedEseddxUsdCumulative = ZERO
     // entity.timestamp = timestamp
   }
-  return entity as GlpStat
+  return entity as ElpStat
 }
 
-export function handleDistributeEthToGlp(event: Distribute): void {
+export function handleDistributeEthToElp(event: Distribute): void {
   let amount = event.params.amount
   let amountUsd = getTokenAmountUsd(WETH, amount)
 
-  let totalEntity = _getOrCreateGlpStat("total", "total")
+  let totalEntity = _getOrCreateElpStat("total", "total")
   totalEntity.distributedEth += amount
   totalEntity.distributedEthCumulative += amount
   totalEntity.distributedUsd += amountUsd
@@ -620,7 +620,7 @@ export function handleDistributeEthToGlp(event: Distribute): void {
   totalEntity.save()
 
   let id = _getDayId(event.block.timestamp)
-  let entity = _getOrCreateGlpStat(id, "daily")
+  let entity = _getOrCreateElpStat(id, "daily")
 
   entity.distributedEth += amount
   entity.distributedEthCumulative = totalEntity.distributedEthCumulative
@@ -630,25 +630,25 @@ export function handleDistributeEthToGlp(event: Distribute): void {
   entity.save()
 }
 
-export function handleDistributeEsgmxToGlp(event: Distribute): void {
+export function handleDistributeEseddxToElp(event: Distribute): void {
   let amount = event.params.amount
-  let amountUsd = getTokenAmountUsd(GMX, amount)
+  let amountUsd = getTokenAmountUsd(EDDX, amount)
 
-  let totalEntity = _getOrCreateGlpStat("total", "total")
-  totalEntity.distributedEsgmx += amount
-  totalEntity.distributedEsgmxCumulative += amount
-  totalEntity.distributedEsgmxUsd += amountUsd
-  totalEntity.distributedEsgmxUsdCumulative += amountUsd
+  let totalEntity = _getOrCreateElpStat("total", "total")
+  totalEntity.distributedEseddx += amount
+  totalEntity.distributedEseddxCumulative += amount
+  totalEntity.distributedEseddxUsd += amountUsd
+  totalEntity.distributedEseddxUsdCumulative += amountUsd
 
   totalEntity.save()
 
   let id = _getDayId(event.block.timestamp)
-  let entity = _getOrCreateGlpStat(id, "daily")
+  let entity = _getOrCreateElpStat(id, "daily")
 
-  entity.distributedEsgmx += amount
-  entity.distributedEsgmxCumulative = totalEntity.distributedEthCumulative
-  entity.distributedEsgmxUsd += amountUsd
-  entity.distributedEsgmxUsdCumulative = totalEntity.distributedUsdCumulative
+  entity.distributedEseddx += amount
+  entity.distributedEseddxCumulative = totalEntity.distributedEthCumulative
+  entity.distributedEseddxUsd += amountUsd
+  entity.distributedEseddxUsdCumulative = totalEntity.distributedUsdCumulative
 
   entity.save()
 }
@@ -796,32 +796,32 @@ function _getOrCreateTokenStat(timestamp: BigInt, period: string, token: Address
   return entity as TokenStat;
 }
 
-function _storeGlpStat(timestamp: BigInt, glpSupply: BigInt, aumInUsdg: BigInt): void {
+function _storeElpStat(timestamp: BigInt, elpSupply: BigInt, aumInUsdg: BigInt): void {
   let deprecatedId = _getHourId(timestamp)
-  let deprecatedEntity = HourlyGlpStat.load(deprecatedId)
+  let deprecatedEntity = HourlyElpStat.load(deprecatedId)
 
   if (!deprecatedEntity) {
-    deprecatedEntity = new HourlyGlpStat(deprecatedId)
-    deprecatedEntity.glpSupply = ZERO
+    deprecatedEntity = new HourlyElpStat(deprecatedId)
+    deprecatedEntity.elpSupply = ZERO
     deprecatedEntity.aumInUsdg = ZERO
   }
 
   deprecatedEntity.aumInUsdg = aumInUsdg
-  deprecatedEntity.glpSupply = glpSupply
+  deprecatedEntity.elpSupply = elpSupply
 
   deprecatedEntity.save()
 
   //
 
   let id = _getDayId(timestamp)
-  let totalEntity = _getOrCreateGlpStat("total", "total")
+  let totalEntity = _getOrCreateElpStat("total", "total")
   totalEntity.aumInUsdg = aumInUsdg
-  totalEntity.glpSupply = glpSupply
+  totalEntity.elpSupply = elpSupply
   totalEntity.save()
 
-  let entity = _getOrCreateGlpStat(id, "daily")
+  let entity = _getOrCreateElpStat(id, "daily")
   entity.aumInUsdg = aumInUsdg
-  entity.glpSupply = glpSupply
+  entity.elpSupply = elpSupply
   entity.save()
 }
 

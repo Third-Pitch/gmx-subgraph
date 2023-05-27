@@ -1,5 +1,5 @@
 {
-  "name": "gmx-subgraph",
+  "name": "eddx-subgraph",
   "license": "UNLICENSED",
   "dependencies": {
     "@graphprotocol/graph-cli": "0.45.2-alpha-20230410044421-f7b4f69",

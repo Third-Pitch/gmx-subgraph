@@ -38,22 +38,22 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - StakeGmx
-        - UnstakeGmx
-        - StakeGlp
-        - UnstakeGlp
+        - StakeEddx
+        - UnstakeEddx
+        - StakeElp
+        - UnstakeElp
       abis:
         - name: RewardRouterV2
           file: ./abis/RewardRouterV2.json
       eventHandlers:
-        - event: StakeGmx(address,address,uint256)
-          handler: handleStakeGmx
-        - event: UnstakeGmx(address,address,uint256)
-          handler: handleUnstakeGmx
-        - event: StakeGlp(address,uint256)
-          handler: handleStakeGlp
-        - event: UnstakeGlp(address,uint256)
-          handler: handleUnstakeGlp
+        - event: StakeEddx(address,address,uint256)
+          handler: handleStakeEddx
+        - event: UnstakeEddx(address,address,uint256)
+          handler: handleUnstakeEddx
+        - event: StakeElp(address,uint256)
+          handler: handleStakeElp
+        - event: UnstakeElp(address,uint256)
+          handler: handleUnstakeElp
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
@@ -138,12 +138,12 @@ dataSources:
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
-    name: GlpManager
+    name: ElpManager
     network: base-testnet
     source:
       startBlock: 2451288
       address: "0xE76eEc5A8561Bf5fc01c5e4946F66aE5e2f07CF5"
-      abi: GlpManager
+      abi: ElpManager
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -152,8 +152,8 @@ dataSources:
         - AddLiquidity
         - RemoveLiquidity
       abis:
-        - name: GlpManager
-          file: ./abis/GlpManager.json
+        - name: ElpManager
+          file: ./abis/ElpManager.json
       eventHandlers:
         - event: RemoveLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
           handler: handleRemoveLiquidity
