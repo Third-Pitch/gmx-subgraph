@@ -9,7 +9,7 @@ dataSources:
     name: ChainlinkAggregatorBTC
     network: base-testnet
     source:
-      address: "0x5fE699663197083711137060e3774b9ecDee16D2"
+      address: "0xf8340046E11672610532bc2F7554241ceE118fB7"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -29,7 +29,7 @@ dataSources:
     name: ChainlinkAggregatorETH
     network: base-testnet
     source:
-      address: "0x4200000000000000000000000000000000000006"
+      address: "0xeEF0ee34696a7982b8AE27c67f91f364D91967a0"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -50,7 +50,7 @@ dataSources:
     name: ChainlinkAggregatorLINK
     network: base-testnet
     source:
-      address: "0x1ef0A4Cd5cD4cd23D3dFFB8ec657D92206B11005"
+      address: "0x15608A8A3E2f65e00fe0ef2C9c78Ada4e4E8172E"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -71,7 +71,7 @@ dataSources:
     name: ChainlinkAggregatorDAI
     network: base-testnet
     source:
-      address: "0xaA23a4d90a50A06E171d32EE75897cDCa4BC3F51"
+      address: "0x31e499777A3c68cBf86C99236197870C362bDC2c"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -91,7 +91,7 @@ dataSources:
     name: ChainlinkAggregatorUSDC
     network: base-testnet
     source:
-      address: "0x4f526361313618a87E952720F3eF5b44Dcd7C9c3"
+      address: "0x83Eb07416dAbDB3DE6b12a8FA63F372773814445"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
@@ -111,7 +111,7 @@ dataSources:
     name: ChainlinkAggregatorUSDT
     network: base-testnet
     source:
-      address: "0xdcD63E6142A900DC1E1780595B2D165C6459104E"
+      address: "0x719ddaE0b2506064AeA750f3cca50cF944b15463"
       abi: ChainlinkAggregator
       startBlock: 2451234
     mapping:
