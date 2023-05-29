@@ -6,9 +6,9 @@ dataSources:
     name: FastPriceEvents
     network: base-testnet
     source:
-      address: "0xd4e7B7DEEBEd4AcA142F90416A1a5D6C4A940fd0"
+      address: "0x6f0c6F4d351bd1df124ED1f6442D1ca2faB2f49a"
       abi: FastPriceEvents
-      startBlock: 2451234  # FastPriceEvents was deployed
+      startBlock: 4998000  # FastPriceEvents was deployed
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

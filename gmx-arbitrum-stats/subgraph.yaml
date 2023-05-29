@@ -9,9 +9,9 @@ dataSources:
     name: ChainlinkAggregatorBTC
     network: base-testnet
     source:
-      address: "0xAC15714c08986DACC0379193e22382736796496f"
+      address: "0xf8340046E11672610532bc2F7554241ceE118fB7"
       abi: ChainlinkAggregator
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -29,9 +29,9 @@ dataSources:
     name: ChainlinkAggregatorETH
     network: base-testnet
     source:
-      address: "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+      address: "0xeEF0ee34696a7982b8AE27c67f91f364D91967a0"
       abi: ChainlinkAggregator
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -50,9 +50,9 @@ dataSources:
     name: ChainlinkAggregatorLINK
     network: base-testnet
     source:
-      address: "0x907A947C5F34eC68F8D4eD87d4bac3FA6431a4D1"
+      address: "0x15608A8A3E2f65e00fe0ef2C9c78Ada4e4E8172E"
       abi: ChainlinkAggregator
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -71,9 +71,9 @@ dataSources:
     name: ChainlinkAggregatorDAI
     network: base-testnet
     source:
-      address: "0x440bD1535a02243d72E0fEED45B137efcC98bF7e"
+      address: "0x31e499777A3c68cBf86C99236197870C362bDC2c"
       abi: ChainlinkAggregator
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -91,9 +91,9 @@ dataSources:
     name: ChainlinkAggregatorUSDC
     network: base-testnet
     source:
-      address: "0xb85765935B4d9Ab6f841c9a00690Da5F34368bc0"
+      address: "0x83Eb07416dAbDB3DE6b12a8FA63F372773814445"
       abi: ChainlinkAggregator
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -111,9 +111,9 @@ dataSources:
     name: ChainlinkAggregatorUSDT
     network: base-testnet
     source:
-      address: "0xd5973EB46D6fE54E82C5337dD9536B35D080912C"
+      address: "0x719ddaE0b2506064AeA750f3cca50cF944b15463"
       abi: ChainlinkAggregator
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -131,9 +131,9 @@ dataSources:
     name: ElpManager
     network: base-testnet
     source:
-      address: "0xE76eEc5A8561Bf5fc01c5e4946F66aE5e2f07CF5"
+      address: "0x1379acfCD7e4AD52A06560F694DCeB5D442EBe1A"
       abi: ElpManager
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -154,9 +154,9 @@ dataSources:
     name: OrderBook
     network: base-testnet
     source:
-      address: "0x5d0F1fE3613736fD0e4052534b8e089F04B8f2C1"
+      address: "0x9Aee9917A0E7D6fCe32751D7F93e9fB1658dD16D"
       abi: OrderBook
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -193,9 +193,9 @@ dataSources:
     name: FastPriceFeed
     network: base-testnet
     source:
-      address: "0xB544e36CdEaE07f430e06812151a19B5B5F9bDF7"
+      address: "0x1aC4d5F83ef11bEA355bAad28AfeA0EF50250aaC"
       abi: FastPriceFeed
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -214,9 +214,9 @@ dataSources:
     name: FastPriceEvents
     network: base-testnet
     source:
-      address: "0xd4e7B7DEEBEd4AcA142F90416A1a5D6C4A940fd0"
+      address: "0x6f0c6F4d351bd1df124ED1f6442D1ca2faB2f49a"
       abi: FastPriceEvents
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -235,9 +235,9 @@ dataSources:
     name: UniswapPool
     network: base-testnet
     source:
-      address: "0x60aAb54530A7fCf8351e3B6d8258C65f8f4f70a9"
+      address: "0x6F11D6FA55f548571D7854360B564722043D3E34"
       abi: UniswapPoolV3
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -256,9 +256,9 @@ dataSources:
     name: FeeEddxRewardDistributor
     network: base-testnet
     source:
-      address: "0x2E7b88f2A77976e7D143D19200D14d863Eae67E6"
+      address: "0xbbaADd3af52A44dB8A4374DcCCE6Bf2FF03d29B5"
       abi: RewardDistributor
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -274,12 +274,12 @@ dataSources:
       file: ./src/mapping.ts
 
   - kind: ethereum/contract
-    name: EseddxEddxRewardDistributor
+    name: EseddxEDDXRewardDistributor
     network: base-testnet
     source:
-      address: "0xA0dAb4a62000Dd9E7C2E4bE80b236EB908A28f05"
+      address: "0x6826Aad0597760624D5E69C918a2703c1637DbAA"
       abi: RewardDistributor
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -298,9 +298,9 @@ dataSources:
     name: FeeElpRewardDistributor
     network: base-testnet
     source:
-      address: "0x3851A4d4C6cDdF8a2ED03d31b49A7578E5186f96"
+      address: "0xB6f2074f7aE35c37908A307AEFb58dE838e1a8b3"
       abi: RewardDistributor
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -319,9 +319,9 @@ dataSources:
     name: EseddxElpRewardDistributor
     network: base-testnet
     source:
-      address: "0x7dA0DaEfbE12AA190f2779f86A309823B8Fa78Fe"
+      address: "0x87bF8c96086aafCe20182c48333473fF3365b65e"
       abi: RewardDistributor
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -340,9 +340,9 @@ dataSources:
     name: Vault2
     network: base-testnet
     source:
-      address: "0xfD22f2b0975Ff9219a635cF84F3Fd154AB78af9B"
+      address: "0x74cCDFcff6CbE68ecD1eb21a23243D217601F4C0"
       abi: Vault
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -367,9 +367,9 @@ dataSources:
     name: Vault
     network: base-testnet
     source:
-      address: "0xfD22f2b0975Ff9219a635cF84F3Fd154AB78af9B"
+      address: "0x74cCDFcff6CbE68ecD1eb21a23243D217601F4C0"
       abi: Vault
-      startBlock: 2451234
+      startBlock: 4998000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

@@ -10,25 +10,6 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "StakeElp",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "address",
         "name": "token",
         "type": "address"
@@ -59,7 +40,7 @@
         "type": "uint256"
       }
     ],
-    "name": "UnstakeElp",
+    "name": "StakeElp",
     "type": "event"
   },
   {
@@ -85,6 +66,25 @@
       }
     ],
     "name": "UnstakeEddx",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "UnstakeElp",
     "type": "event"
   },
   {
@@ -200,7 +200,7 @@
   },
   {
     "inputs": [],
-    "name": "esEddx",
+    "name": "eddx",
     "outputs": [
       {
         "internalType": "address",
@@ -213,20 +213,7 @@
   },
   {
     "inputs": [],
-    "name": "feeElpTracker",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "feeEddxTracker",
+    "name": "eddxVester",
     "outputs": [
       {
         "internalType": "address",
@@ -278,7 +265,7 @@
   },
   {
     "inputs": [],
-    "name": "eddx",
+    "name": "esEddx",
     "outputs": [
       {
         "internalType": "address",
@@ -291,7 +278,20 @@
   },
   {
     "inputs": [],
-    "name": "eddxVester",
+    "name": "feeEddxTracker",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "feeElpTracker",
     "outputs": [
       {
         "internalType": "address",
@@ -555,19 +555,6 @@
         "type": "uint256"
       }
     ],
-    "name": "stakeEsEddx",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
     "name": "stakeEddx",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -592,8 +579,21 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakeEsEddx",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "stakedElpTracker",
+    "name": "stakedEddxTracker",
     "outputs": [
       {
         "internalType": "address",
@@ -606,7 +606,7 @@
   },
   {
     "inputs": [],
-    "name": "stakedEddxTracker",
+    "name": "stakedElpTracker",
     "outputs": [
       {
         "internalType": "address",
@@ -688,7 +688,7 @@
         "type": "uint256"
       }
     ],
-    "name": "unstakeEsEddx",
+    "name": "unstakeEddx",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -701,7 +701,7 @@
         "type": "uint256"
       }
     ],
-    "name": "unstakeEddx",
+    "name": "unstakeEsEddx",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

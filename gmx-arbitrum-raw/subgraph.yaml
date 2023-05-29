@@ -6,7 +6,7 @@ dataSources:
     name: PositionRouter
     network: base-testnet
     source:
-      address: "0xECA4B3f2aF83367B047bbf2DeCC3BA39630CE1FC"
+      address: "0xCf67dd61bA0B6f6E85aFa3D7A9F4550c2FF0AD94"
       abi: PositionRouter
       startBlock: 2717572
     mapping:
@@ -30,7 +30,7 @@ dataSources:
     name: RewardRouterV2
     network: base-testnet
     source:
-      address: "0xC125A16E5BDCEB2E4E5950df1490c891D7bE2Cd1"
+      address: "0x872fd8632A2584348cd5D0fDaBfEfCf2aEaCE9cc"
       abi: RewardRouterV2
       startBlock: 2754677
     mapping:
@@ -61,7 +61,7 @@ dataSources:
     network: base-testnet
     source:
       startBlock: 2451236
-      address: "0xfD22f2b0975Ff9219a635cF84F3Fd154AB78af9B"
+      address: "0x74cCDFcff6CbE68ecD1eb21a23243D217601F4C0"
       abi: Vault
     mapping:
       kind: ethereum/events
@@ -142,7 +142,7 @@ dataSources:
     network: base-testnet
     source:
       startBlock: 2451288
-      address: "0xE76eEc5A8561Bf5fc01c5e4946F66aE5e2f07CF5"
+      address: "0x1379acfCD7e4AD52A06560F694DCeB5D442EBe1A"
       abi: ElpManager
     mapping:
       kind: ethereum/events
