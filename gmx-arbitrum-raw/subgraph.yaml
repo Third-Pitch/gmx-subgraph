@@ -30,7 +30,7 @@ dataSources:
     name: RewardRouterV2
     network: base-testnet
     source:
-      address: "0x872fd8632A2584348cd5D0fDaBfEfCf2aEaCE9cc"
+      address: "0x374Fc25c8AE99bc71B616142bC4BB09D8d44BB3b"
       abi: RewardRouterV2
       startBlock: 2754677
     mapping:
