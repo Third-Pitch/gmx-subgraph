@@ -243,3 +243,14 @@ type Swap @entity {
   transaction: Transaction!
   timestamp: Int!
 }
+
+type OrderAction @entity {
+  id: ID!
+
+  account: String!
+  action: String!
+  blockNumber: BigInt!
+  params: String!
+  timestamp: Int!
+  txHash: String!
+}

@@ -20,7 +20,8 @@ import {
   StakeElp,
   UnstakeElp,
   CreateIncreasePosition,
-  CreateDecreasePosition
+  CreateDecreasePosition,
+  OrderAction
 } from "../generated/schema"
 
 function _createTransactionIfNotExist(event: ethereum.Event): string {
@@ -68,6 +69,16 @@ export function handleLiquidatePosition(event: vault.LiquidatePosition): void {
   entity.timestamp = event.block.timestamp.toI32()
 
   entity.save()
+
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action = entity.isLong ? "LiquidatePosition-Long":"LiquidatePosition-Short"
+  orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params = "{\"key\":\""+entity.key+"\",\"collateralToken\":\""+entity.collateralToken+"\",\"indexToken\":\""+entity.indexToken+"\",\"isLong\":"+entity.isLong+",\"size\":\""+entity.size+"\",\"collateral\":\""+entity.collateral+"\",\"reserveAmount\":\""+entity.reserveAmount+"\",\"markPrice\":\""+entity.markPrice+"\",\"feeBasisPoints\":10}"
+  orderAction.save()
 }
 
 export function handleUpdatePosition(event: vault.UpdatePosition): void {
@@ -126,6 +137,17 @@ export function handleCreateIncreasePosition(event: positionRouter.CreateIncreas
   entity.timestamp = event.block.timestamp.toI32()
 
   entity.save()
+
+  // TODO
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action =
+      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params =
+      orderAction.save()
 }
 
 export function handleCreateDecreasePosition(event: positionRouter.CreateDecreasePosition): void {
@@ -145,6 +167,17 @@ export function handleCreateDecreasePosition(event: positionRouter.CreateDecreas
   entity.timestamp = event.block.timestamp.toI32()
 
   entity.save()
+
+  // TODO
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action =
+      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params =
+      orderAction.save()
 }
 
 export function handleIncreasePosition(event: vault.IncreasePosition): void {
@@ -166,6 +199,17 @@ export function handleIncreasePosition(event: vault.IncreasePosition): void {
   entity.timestamp = event.block.timestamp.toI32()
 
   entity.save()
+
+  // TODO
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action =
+      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params =
+      orderAction.save()
 }
 
 export function handleDecreasePosition(event: vault.DecreasePosition): void {
@@ -187,6 +231,17 @@ export function handleDecreasePosition(event: vault.DecreasePosition): void {
   entity.timestamp = event.block.timestamp.toI32()
 
   entity.save()
+
+  // TODO
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action =
+      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params =
+      orderAction.save()
 }
 
 export function handleCollectMarginFees(event: vault.CollectMarginFees): void {
@@ -230,6 +285,17 @@ export function handleSwap(event: vault.Swap): void {
   entity.timestamp = event.block.timestamp.toI32()
 
   entity.save()
+  let id = _generateIdFromEvent(event)
+  // TODO
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action =
+      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params =
+      orderAction.save()
 }
 
 export function handleAddLiquidity(event: elpManager.AddLiquidity): void {
@@ -247,6 +313,17 @@ export function handleAddLiquidity(event: elpManager.AddLiquidity): void {
   entity.timestamp = event.block.timestamp.toI32()
 
   entity.save()
+  let id = _generateIdFromEvent(event)
+  // TODO BuyUSDG
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action =
+      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params =
+      orderAction.save()
 }
 
 export function handleRemoveLiquidity(event: elpManager.RemoveLiquidity): void {
@@ -263,7 +340,19 @@ export function handleRemoveLiquidity(event: elpManager.RemoveLiquidity): void {
   entity.transaction = _createTransactionIfNotExist(event)
   entity.timestamp = event.block.timestamp.toI32()
 
-  entity.save() 
+  entity.save()
+
+  let id = _generateIdFromEvent(event)
+  // TODO SellUSDG
+  let orderAction = new OrderAction(id)
+  orderAction.account = event.params.account.toHexString()
+  orderAction.action =
+      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.timestamp = event.block.timestamp.toI32()
+  orderAction.txHash = event.transaction.hash.toHexString()
+  // 将entity的参数转换成json
+  orderAction.params =
+      orderAction.save()
 }
 
 export function handleStakeEddx(event: rewardRouter.StakeEddx): void {
