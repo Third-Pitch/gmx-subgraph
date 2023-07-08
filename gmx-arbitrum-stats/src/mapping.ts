@@ -563,8 +563,8 @@ function _storeVolumeBySource(type: string, timestamp: BigInt, source: Address |
     }
   }else{
     entity.setBigInt(type, entity.getBigInt(type) + volume)
-    entity.save()
   }
+  entity.save()
 
 }
 
