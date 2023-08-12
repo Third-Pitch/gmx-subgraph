@@ -72,6 +72,10 @@ type CollectSwapFee @entity {
 type UpdatePosition @entity {
   id: ID!
 
+  account: String!
+  collateralToken: String!
+  indexToken: String!
+  isLong: Boolean!
   key: String!
   size: BigInt!
   collateral: BigInt!
@@ -79,7 +83,7 @@ type UpdatePosition @entity {
   entryFundingRate: BigInt!
   reserveAmount: BigInt!
   realisedPnl: BigInt!
-
+  price: BigInt!
   transaction: Transaction!
   logIndex: Int!
   timestamp: Int!

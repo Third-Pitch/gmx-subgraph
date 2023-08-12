@@ -1,0 +1,16 @@
+{
+  "name": "gmx",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "auth": "graph auth --studio 69084f663b7e5fce03447dd40e795520",
+    "deploy-base-test": "graph deploy --studio  test-synthetics-stat"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.48.0",
+    "@graphprotocol/graph-ts": "0.29.3",
+    "ethers": "^5.4.6",
+    "moment": "^2.29.1"
+  }
+}

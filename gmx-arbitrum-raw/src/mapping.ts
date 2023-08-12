@@ -1,4 +1,4 @@
-import { BigInt, ethereum } from "@graphprotocol/graph-ts"
+import { BigInt, ethereum, store } from "@graphprotocol/graph-ts"
 import * as vault from "../generated/Vault/Vault"
 import * as positionRouter from "../generated/PositionRouter/PositionRouter"
 import * as elpManager from "../generated/ElpManager/ElpManager"
@@ -49,6 +49,10 @@ function _generateIdFromEvent(event: ethereum.Event): string {
   return event.transaction.hash.toHexString() + ":" + event.logIndex.toString()
 }
 
+function _getIdFromSameEvent(event: ethereum.Event): string {
+  return event.transaction.hash.toHexString() + ":" + event.logIndex.minus(BigInt.fromString("1")).toString()
+}
+
 export function handleLiquidatePosition(event: vault.LiquidatePosition): void {
   let id = _generateIdFromEvent(event)
   let entity = new LiquidatePosition(id)
@@ -73,30 +77,49 @@ export function handleLiquidatePosition(event: vault.LiquidatePosition): void {
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
   orderAction.action = entity.isLong ? "LiquidatePosition-Long":"LiquidatePosition-Short"
-  orderAction.blockNumber = event.block.number.toI32()
+  orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params = "{\"key\":\""+entity.key+"\",\"collateralToken\":\""+entity.collateralToken+"\",\"indexToken\":\""+entity.indexToken+"\",\"isLong\":"+entity.isLong+",\"size\":\""+entity.size+"\",\"collateral\":\""+entity.collateral+"\",\"reserveAmount\":\""+entity.reserveAmount+"\",\"markPrice\":\""+entity.markPrice+"\",\"feeBasisPoints\":10}"
+  
+  orderAction.params = "{\"key\":\""+entity.key+"\",\"collateralToken\":\""+entity.collateralToken+"\",\"indexToken\":\""+entity.indexToken+"\",\"isLong\":"+(entity.isLong?"true":"false")+",\"size\":\""+entity.size.toString()+"\",\"collateral\":\""+entity.collateral.toString()+"\",\"reserveAmount\":\""+entity.reserveAmount.toString()+"\",\"markPrice\":\""+entity.markPrice.toString()+"\",\"feeBasisPoints\":10}"
   orderAction.save()
+
+  store.remove("UpdatePosition", event.params.key.toHexString())
 }
 
 export function handleUpdatePosition(event: vault.UpdatePosition): void {
-  let id = _generateIdFromEvent(event)
-  let entity = new UpdatePosition(id)
 
-  entity.key = event.params.key.toHexString()
-  entity.size = event.params.size
-  entity.collateral = event.params.collateral
-  entity.averagePrice = event.params.averagePrice
-  entity.entryFundingRate = event.params.entryFundingRate
-  entity.reserveAmount = event.params.reserveAmount
-  entity.realisedPnl = event.params.realisedPnl
-
-  entity.transaction = _createTransactionIfNotExist(event)
-  entity.logIndex = event.logIndex.toI32()
-  entity.timestamp = event.block.timestamp.toI32()
-
+  let entity = UpdatePosition.load(event.params.key.toHexString())
+  let id = _getIdFromSameEvent(event)
+  if(!entity){
+    entity = new UpdatePosition(event.params.key.toHexString())
+    entity.key = event.params.key.toHexString()
+    entity.size = event.params.size
+    entity.collateral = event.params.collateral
+    entity.averagePrice = event.params.averagePrice
+    entity.entryFundingRate = event.params.entryFundingRate
+    entity.reserveAmount = event.params.reserveAmount
+    entity.realisedPnl = event.params.realisedPnl
+    entity.price = event.params.markPrice
+    entity.transaction = _createTransactionIfNotExist(event)
+    entity.logIndex = event.logIndex.toI32()
+    entity.timestamp = event.block.timestamp.toI32()
+    let increasePosition = IncreasePosition.load(id)
+    if(increasePosition){
+      entity.account = increasePosition.account
+      entity.collateralToken = increasePosition.collateralToken
+      entity.indexToken = increasePosition.indexToken
+      entity.isLong = increasePosition.isLong
+    }
+  }else{
+    entity.size = event.params.size
+    entity.collateral = event.params.collateral
+    entity.averagePrice = event.params.averagePrice
+    entity.entryFundingRate = event.params.entryFundingRate
+    entity.reserveAmount = event.params.reserveAmount
+    entity.realisedPnl = event.params.realisedPnl
+    entity.price = event.params.markPrice
+  }
   entity.save()
 }
 
@@ -115,8 +138,8 @@ export function handleClosePosition(event: vault.ClosePosition): void {
   entity.transaction = _createTransactionIfNotExist(event)
   entity.logIndex = event.logIndex.toI32()
   entity.timestamp = event.block.timestamp.toI32()
-
   entity.save()
+  store.remove("UpdatePosition", event.params.key.toHexString())
 }
 
 export function handleCreateIncreasePosition(event: positionRouter.CreateIncreasePosition): void {
@@ -138,15 +161,14 @@ export function handleCreateIncreasePosition(event: positionRouter.CreateIncreas
 
   entity.save()
 
-  // TODO
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
-  orderAction.action =
-      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.action = "CreateIncreasePosition"
+      orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params =
+  
+  orderAction.params =  "{\"account\":\""+entity.account+"\",\"collateralToken\":\""+entity.collateralToken+"\",\"indexToken\":\""+entity.indexToken+"\",\"sizeDelta\":\""+entity.sizeDelta.toString()+"\",\"amountIn\":\""+entity.amountIn.toString()+"\",\"isLong\":"+(entity.isLong?"true":"false")+",\"acceptablePrice\":\""+entity.acceptablePrice.toString()+"\",\"executionFee\":\""+entity.executionFee.toString()+"\"}"
       orderAction.save()
 }
 
@@ -168,15 +190,14 @@ export function handleCreateDecreasePosition(event: positionRouter.CreateDecreas
 
   entity.save()
 
-  // TODO
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
-  orderAction.action =
-      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.action = "CreateDecreasePosition"
+      orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params =
+  
+  orderAction.params =  "{\"account\":\""+entity.account+"\",\"collateralToken\":\""+entity.collateralToken+"\",\"indexToken\":\""+entity.indexToken+"\",\"sizeDelta\":\""+entity.sizeDelta.toString()+"\",\"isLong\":"+(entity.isLong?"true":"false")+",\"acceptablePrice\":\""+entity.acceptablePrice.toString()+"\",\"executionFee\":\""+entity.executionFee.toString()+"\"}"
       orderAction.save()
 }
 
@@ -200,15 +221,14 @@ export function handleIncreasePosition(event: vault.IncreasePosition): void {
 
   entity.save()
 
-  // TODO
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
-  orderAction.action =
-      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.action = "IncreasePosition"
+      orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params =
+  
+  orderAction.params =  "{\"key\":\""+entity.key+"\",\"account\":\""+entity.account+"\",\"collateralToken\":\""+entity.collateralToken+"\",\"indexToken\":\""+entity.indexToken+"\",\"collateralDelta\":\""+entity.collateralDelta.toString()+"\",\"sizeDelta\":\""+entity.sizeDelta.toString()+"\",\"isLong\":"+(entity.isLong?"true":"false")+",\"price\":\""+entity.price.toString()+"\",\"fee\":\""+entity.fee.toString()+"\"}"
       orderAction.save()
 }
 
@@ -232,15 +252,15 @@ export function handleDecreasePosition(event: vault.DecreasePosition): void {
 
   entity.save()
 
-  // TODO
+
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
-  orderAction.action =
-      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.action = "DecreasePosition"
+      orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params =
+  
+  orderAction.params =  "{\"key\":\""+entity.key+"\",\"account\":\""+entity.account+"\",\"collateralToken\":\""+entity.collateralToken+"\",\"indexToken\":\""+entity.indexToken+"\",\"collateralDelta\":\""+entity.collateralDelta.toString()+"\",\"sizeDelta\":\""+entity.sizeDelta.toString()+"\",\"isLong\":"+(entity.isLong?"true":"false")+",\"price\":\""+entity.price.toString()+"\",\"fee\":\""+entity.fee.toString()+"\"}"
       orderAction.save()
 }
 
@@ -286,15 +306,14 @@ export function handleSwap(event: vault.Swap): void {
 
   entity.save()
   let id = _generateIdFromEvent(event)
-  // TODO
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
-  orderAction.action =
-      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.action = "Swap"
+      orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params =
+  
+  orderAction.params = "{\"account\":\""+entity.account+"\",\"tokenIn\":\""+entity.tokenIn.toString()+"\",\"tokenOut\":\""+entity.tokenOut.toString()+"\",\"amountIn\":\""+entity.amountIn.toString()+"\",\"amountOut\":\""+entity.amountOut.toString()+"\",\"amountOutAfterFees\":\""+entity.amountOutAfterFees.toString()+"\",\"feeBasisPoints\":\""+entity.feeBasisPoints.toString()+"\"}"
       orderAction.save()
 }
 
@@ -314,15 +333,14 @@ export function handleAddLiquidity(event: elpManager.AddLiquidity): void {
 
   entity.save()
   let id = _generateIdFromEvent(event)
-  // TODO BuyUSDG
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
-  orderAction.action =
-      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.action = "BuyUSDG"
+      orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params =
+  
+  orderAction.params =  "{\"account\":\""+entity.account+"\",\"token\":\""+entity.token+"\",\"amount\":\""+entity.amount.toString()+"\",\"aumInUsdg\":\""+entity.aumInUsdg.toString()+"\",\"elpSupply\":\""+entity.elpSupply.toString()+"\",\"usdgAmount\":\""+entity.usdgAmount.toString()+"\",\"mintAmount\":\""+entity.mintAmount.toString()+"\"}"
       orderAction.save()
 }
 
@@ -343,15 +361,15 @@ export function handleRemoveLiquidity(event: elpManager.RemoveLiquidity): void {
   entity.save()
 
   let id = _generateIdFromEvent(event)
-  // TODO SellUSDG
+
   let orderAction = new OrderAction(id)
   orderAction.account = event.params.account.toHexString()
-  orderAction.action =
-      orderAction.blockNumber = event.block.number.toI32()
+  orderAction.action = "SellUSDG"
+      orderAction.blockNumber = event.block.number
   orderAction.timestamp = event.block.timestamp.toI32()
   orderAction.txHash = event.transaction.hash.toHexString()
-  // 将entity的参数转换成json
-  orderAction.params =
+  
+  orderAction.params =  "{\"account\":\""+entity.account+"\",\"token\":\""+entity.token+"\",\"elpAmount\":\""+entity.elpAmount.toString()+"\",\"aumInUsdg\":\""+entity.aumInUsdg.toString()+"\",\"elpSupply\":\""+entity.elpSupply.toString()+"\",\"usdgAmount\":\""+entity.usdgAmount.toString()+"\",\"amountOut\":\""+entity.amountOut.toString()+"\"}"
       orderAction.save()
 }
 
